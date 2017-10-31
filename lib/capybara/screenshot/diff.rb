@@ -6,6 +6,7 @@ require 'capybara/screenshot/diff/test_methods'
 module Capybara
   module Screenshot
     extend Os
+    mattr_accessor :save_path
     mattr_accessor :add_driver_path
     mattr_accessor :add_os_path
     mattr_accessor :blur_active_element
@@ -20,7 +21,7 @@ module Capybara
       end
 
       def screenshot_area
-        parts = ['doc/screenshots']
+        parts = [save_path || 'test/screenshots']
         parts << Capybara.default_driver.to_s if Capybara::Screenshot.add_driver_path
         parts << os_name if Capybara::Screenshot.add_os_path
         File.join parts

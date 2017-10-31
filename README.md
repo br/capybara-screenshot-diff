@@ -18,6 +18,14 @@ Add this line to your application's Gemfile:
 gem 'capybara-screenshot-diff'
 ```
 
+Then include to your tests `Capybara::Screenshot::Diff`:
+
+```ruby
+describe 'Some feature', :type => :feature, :js => true do
+  include Capybara::Screenshot::Diff
+  ...
+```
+
 And then execute:
 
     $ bundle
@@ -29,7 +37,7 @@ Or install it yourself as:
 ## Usage
 
 Add `screenshot '<my_feature>'` to your tests.  The screenshot will be saved in
-the `doc/screenshots` directory.
+the `test/screenshots` directory.
 
 Change your existing `save_screenshot` calls to `screenshot`
 
@@ -47,14 +55,14 @@ end
 This will produce a sequence of images like this
 
 ```
-doc
+test
   screenshots
     action_performed
     feature_index
     welcome_index
 ```
 
-To store the screen shot history, add the `doc/screenshots` directory to your
+To store the screen shot history, add the `test/screenshots` directory to your
  version control system (git, svn, etc).
 
 ### Screenshot groups
@@ -78,7 +86,7 @@ end
 This will produce a sequence of images like this
 
 ```
-doc
+test
   screenshots
     useful_feature
       00-welcome_index
@@ -115,7 +123,7 @@ end
 This will produce a sequence of images like this
 
 ```
-doc
+test
   screenshots
     my_feature
       subfeature
@@ -138,7 +146,7 @@ The example above will then save your screenshots like this
 (for poltergeist and selenium):
 
 ```
-doc
+test
   screenshots
     poltergeist
       useful_feature
@@ -166,7 +174,7 @@ The example above will then save your screenshots like this
 (for Linux and Windows):
 
 ```
-doc
+test
   screenshots
     linux
       useful_feature
@@ -227,7 +235,7 @@ Capybara::Screenshot::Diff.enabled = ENV['COMPARE_SCREENSHOTS']
 If you would like the screen shots to be saved in a different location set
 
 ```ruby
-Capybara::Screenshot.save_path = "#{Rails.root}/doc/gui"
+Capybara::Screenshot.save_path = "spec/screenshots"
 ```
 
 ### Screen shot stability
