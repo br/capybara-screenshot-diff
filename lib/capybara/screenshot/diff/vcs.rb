@@ -6,8 +6,7 @@ module Capybara
         SILENCE_ERRORS = Os::ON_WINDOWS ? '2>nul' : '2>/dev/null'
 
         def restore_git_revision(name, target_file_name)
-          redirect_target = "#{target_file_name} #{SILENCE_ERRORS}"
-          `git show HEAD~0:./#{Capybara::Screenshot.screenshot_area}/#{name}.png > #{redirect_target}`
+          `git show "HEAD~0:./#{Capybara::Screenshot.screenshot_area}/#{name}.png" > "#{target_file_name}" #{SILENCE_ERRORS}`
           FileUtils.rm_f(target_file_name) unless $CHILD_STATUS == 0
         end
 
@@ -17,7 +16,7 @@ module Capybara
             committed_file_name = svn_file_name
             FileUtils.cp committed_file_name, comparison.old_file_name
           else
-            svn_info = `svn info #{comparison.new_file_name} #{SILENCE_ERRORS}`
+            svn_info = `svn info "#{comparison.new_file_name}" #{SILENCE_ERRORS}`
             if svn_info.present?
               wc_root = svn_info.slice(/(?<=Working Copy Root Path: ).*$/)
               checksum = svn_info.slice(/(?<=Checksum: ).*$/)
