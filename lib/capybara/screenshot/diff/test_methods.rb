@@ -58,7 +58,7 @@ module Capybara
 
         def screenshot_group(name)
           @screenshot_group = name.to_s
-          @screenshot_counter = 0
+          @screenshot_counter = 1
           return unless Screenshot.active? && name.present?
           FileUtils.rm_rf screenshot_dir
         end
