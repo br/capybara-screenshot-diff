@@ -18,8 +18,8 @@ module Capybara
           @area_size_limit = area_size_limit
           @dimensions = dimensions
           @old_file_name = old_file_name || "#{new_file_name}~"
-          @annotated_old_file_name = "#{new_file_name.chomp('.png')}_0.png~"
-          @annotated_new_file_name = "#{new_file_name.chomp('.png')}_1.png~"
+          @annotated_old_file_name = "#{new_file_name.chomp('.png')}_0.png"
+          @annotated_new_file_name = "#{new_file_name.chomp('.png')}_1.png"
           reset
         end
 
