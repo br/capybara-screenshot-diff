@@ -72,7 +72,7 @@ module Capybara
             @screenshot_counter += 1
           end
           name = full_name(name)
-          file_name = "#{Screenshot.screenshot_area_abs}/#{name}.png"
+          file_name = "#{name}.png"
 
           FileUtils.mkdir_p File.dirname(file_name)
           comparison = ImageCompare.new(file_name,
@@ -109,8 +109,7 @@ module Capybara
 
           "Screenshot does not match for '#{name}' (area: #{comparison.size}px #{comparison.dimensions}" \
             ", max_color_distance: #{max_color_distance})\n" \
-            "#{comparison.new_file_name}\n#{comparison.annotated_old_file_name}\n" \
-            "#{comparison.annotated_new_file_name}\n" \
+            "#{comparison.example_path}\n" \
             "at #{caller}"
         end
       end

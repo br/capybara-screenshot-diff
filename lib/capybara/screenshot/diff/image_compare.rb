@@ -11,16 +11,27 @@ module Capybara
         attr_reader :annotated_new_file_name, :annotated_old_file_name, :new_file_name,
             :old_file_name
 
-        def initialize(new_file_name, old_file_name = nil, dimensions: nil, color_distance_limit: nil,
-            area_size_limit: nil)
-          @new_file_name = new_file_name
+        def initialize(new_file_name, old_file_name = nil,
+                       dimensions: nil, color_distance_limit: nil,
+                       area_size_limit: nil)
+          @new_file_name = "#{Screenshot.screenshot_area_abs}/#{new_file_name}"
           @color_distance_limit = color_distance_limit
           @area_size_limit = area_size_limit
           @dimensions = dimensions
-          @old_file_name = old_file_name || "#{new_file_name}~"
-          @annotated_old_file_name = "#{new_file_name.chomp('.png')}_0.png"
-          @annotated_new_file_name = "#{new_file_name.chomp('.png')}_1.png"
+
+          temp_path = Rails.root.join('tmp', 'capybara-diff').to_s
+          temp_file = File.join temp_path, new_file_name
+          FileUtils::mkdir_p File.dirname(temp_file)
+          @old_file_name = old_file_name || temp_file
+          @annotated_old_file_name = "#{temp_file.chomp('.png')}_0.png"
+          @annotated_new_file_name = "#{temp_file.chomp('.png')}_1.png"
           reset
+        end
+
+        def example_path
+          path = annotated_new_file_name
+          path.gsub!(Rails.root.to_s+'/', '') if defined? Rails
+          path
         end
 
         # Resets the calculated data about the comparison with regard to the "new_image".
