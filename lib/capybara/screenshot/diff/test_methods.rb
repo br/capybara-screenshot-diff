@@ -71,6 +71,7 @@ module Capybara
             name = "#{format('%02i', @screenshot_counter)}_#{name}"
             @screenshot_counter += 1
           end
+          name.gsub! /[\s)]/, '_'
           name = full_name(name)
           file_name = "#{name}.png"
 
